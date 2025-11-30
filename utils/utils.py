@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 def parse_fasta_optimized(file_path):
     ids = []
@@ -68,6 +69,18 @@ print(df_final.head())
 print(f"\nTamanho do Dataset: {len(df_final)} exemplos")
 
 print("\nTop 10 Funções mais comuns (Nossas Classes):")
-print(df_final['function_clean'].value_counts().head(10))
+top_10_counts = df_final['function_clean'].value_counts().head(10)
+print(top_10_counts)
 
 df_final.to_csv("dataset_processado.csv", index=False)
+
+plt.figure(figsize=(12, 6))
+top_10_counts.plot(kind='bar', color='#4c72b0', edgecolor='black')
+plt.title('Top 10 Funções de Proteínas Mais Comuns')
+plt.xlabel('Função')
+plt.ylabel('Número de Amostras')
+plt.xticks(rotation=45, ha='right')
+plt.grid(axis='y', linestyle='--', alpha=0.7)
+plt.tight_layout()
+plt.savefig('distribuicao_amostras.png')
+plt.show()
